@@ -33,7 +33,27 @@ to handle search by query, and it will be passed as props to header
   /*2. here there will be a function named handleDelete
   to delete a note, and it will be passed as props to NoteCard that will be triggered using delete button.
    */
+  const handleDelete = id => {
+    const proceed = window.confirm('Are you sure ?');
+    if (proceed) {
+      console.log(id)
+      const url = `http://localhost:4000/note/${id}`;
+      fetch(url, {
+        method: 'delete'
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data)
+          if (data.deletedCount > 0) {
+            setIsReload(!isReload)
+          }
+        })
+    }
+    else {
+      console.log('cancelled')
+    }
 
+  }
 
 
 
@@ -78,6 +98,7 @@ to post data to backend, and it will be passed as props to InputFrom.
       .then(res => res.json())
       .then(data => {
         setIsReload(!isReload)
+        event.target.reset();
       })
 
   }
@@ -91,6 +112,7 @@ to post data to backend, and it will be passed as props to InputFrom.
       <div className="row row-cols-1 row-cols-md-3 g-4 m-2">
         {notes.map((note) => (
           <NoteCard
+            handleDelete={handleDelete}
             key={note._id}
             note={note}
           />

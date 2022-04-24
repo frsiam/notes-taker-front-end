@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import UpdateModal from '../updateModal/UpdateModal';
 
 
@@ -10,13 +9,8 @@ const customStyles = {
   width: "80px",
 };
 
-const NoteCard = ({ note }) => {
+const NoteCard = ({ note, handleDelete }) => {
 
-  const handleDelete = id => {
-    console.log(id);
-    fetch(`http://localhost:4000/note/${id}`)
-
-  }
   return (
     <div className="col mt-5" style={{ position: "relative" }}>
       <div className="rounded h-100 color-060930 note-card">
@@ -30,7 +24,7 @@ const NoteCard = ({ note }) => {
           </p>
         </div>
         <div className="card-body mt-5">
-          <h5 className="card-title">Author : {note.age}</h5>
+          <h5 className="card-title">Author : {note.notes}</h5>
           <p className="card-text">{note.name}</p>
         </div>
         <div className="card-footer d-flex justify-content-center">
