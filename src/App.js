@@ -11,7 +11,7 @@ function App() {
 
   useEffect(() => {
 
-    fetch("notes.json")
+    fetch("http://localhost:4000/notes")
       .then(res => res.json())
       .then(data => setNotes(data))
 
@@ -22,7 +22,12 @@ function App() {
 to handle search by query, and it will be passed as props to header
 
   */
-
+  const handleSearch = event => {
+    event.preventDefault();
+    console.log('Hello')
+    const queryText = event.target.searchText.value;
+    console.log(queryText)
+  }
 
 
 
@@ -65,11 +70,12 @@ to post data to backend, and it will be passed as props to InputFrom.
 
   return (
     <div className="App">
-      <Header />
+      <Header handleSearch={handleSearch} />
       <InputForm />
       <div className="row row-cols-1 row-cols-md-3 g-4 m-2">
         {notes.map((note) => (
           <NoteCard
+            key={note._id}
             note={note}
           />
         ))}

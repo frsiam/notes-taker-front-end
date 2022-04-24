@@ -11,7 +11,7 @@ const inputForm = () => {
           <input
             type="text"
             className="form-control"
-            placeholder="Your name"
+            placeholder="Your name please"
             aria-label="Username"
             name="user_name"
           />
@@ -23,6 +23,7 @@ const inputForm = () => {
             className="form-control"
             aria-label="With textarea"
             name="text"
+            placeholder="Here your message"
           ></textarea>
         </div>
         <div className="mt-4">
