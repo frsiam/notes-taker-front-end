@@ -29,7 +29,6 @@ to handle search by query, and it will be passed as props to header
         .then(data => setNotes(data))
     }
   }
-
   /*2. here there will be a function named handleDelete
   to delete a note, and it will be passed as props to NoteCard that will be triggered using delete button.
    */
@@ -49,27 +48,13 @@ to handle search by query, and it will be passed as props to header
           }
         })
     }
-    else {
-      console.log('cancelled')
-    }
 
   }
-
-
-
-
-
-
-
-
-
-
   /*
 3. there will be a function named handleUpdate
     to update data, and it will be passed as props to NoteCard and 
    later it will be passed to Update modal using props.
  */
-
 
 
 
@@ -85,8 +70,6 @@ to post data to backend, and it will be passed as props to InputFrom.
 
     const name = event.target.name.value;
     const notes = event.target.notes.value;
-
-    console.log(name, notes)
 
     fetch('http://localhost:4000/note', {
       method: 'post',
@@ -112,6 +95,8 @@ to post data to backend, and it will be passed as props to InputFrom.
       <div className="row row-cols-1 row-cols-md-3 g-4 m-2">
         {notes.map((note) => (
           <NoteCard
+            isReload={isReload}
+            setIsReload={setIsReload}
             handleDelete={handleDelete}
             key={note._id}
             note={note}

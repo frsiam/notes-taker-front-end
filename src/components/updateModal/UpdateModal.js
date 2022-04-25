@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Modal from "react-modal";
 
@@ -19,26 +19,49 @@ Modal.setAppElement("#root");
 
 //don't worry its just a package for modal. just go and explore https://www.npmjs.com/package/react-modal
 
-export default function UpdateModal() {
+export default function UpdateModal({ note, isReload, setIsReload }) {
+  const [id, setId] = useState('')
   let subtitle;
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
-  function openModal() {
+
+
+  function openModal(id) {
+    setId(id)
     setIsOpen(true);
   }
 
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
-    subtitle.style.color = "#f00";
+    // subtitle.style.color = "#f00";
   }
 
   function closeModal() {
     setIsOpen(false);
   }
-
+  const handleUpdate = (event) => {
+    event.preventDefault();
+    console.log(id)
+    const updatedName = event.target.name.value;
+    const updatedNotes = event.target.notes.value;
+    const url = `http://localhost:4000/note/${id}`
+    fetch(url, {
+      method: 'put',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({ name: updatedName, notes: updatedNotes }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        setIsReload(!isReload)
+        event.target.reset();
+      })
+  }
   return (
     <div>
-      <button onClick={openModal} className="color-801336 btn-sm btn">
+      <button onClick={() => openModal(note?._id)} className="color-801336 btn-sm btn">
         {" "}
         Update
       </button>
@@ -54,9 +77,10 @@ export default function UpdateModal() {
         </button>
         <div>Please insert your text</div>
         <div className=" p-3 color-4D4C7D">
-          <form className="container " >
+          <form onSubmit={handleUpdate} className="container " >
             <div className="input-group mb-3 mt-5">
               <input
+                name="name"
                 type="text"
                 className="form-control"
                 placeholder="Your name"
@@ -66,6 +90,7 @@ export default function UpdateModal() {
 
             <div className="input-group">
               <textarea
+                name="notes"
                 className="form-control"
                 aria-label="With textarea"
               ></textarea>
