@@ -21,7 +21,7 @@ Modal.setAppElement("#root");
 
 export default function UpdateModal({ note, isReload, setIsReload }) {
   const [id, setId] = useState('')
-  let subtitle;
+  // let subtitle;
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
 
@@ -41,7 +41,6 @@ export default function UpdateModal({ note, isReload, setIsReload }) {
   }
   const handleUpdate = (event) => {
     event.preventDefault();
-    console.log(id)
     const updatedName = event.target.name.value;
     const updatedNotes = event.target.notes.value;
     const url = `http://localhost:4000/note/${id}`
